@@ -11,8 +11,6 @@ import java.applet.Applet;
 import java.awt.*; 
 import javax.swing.Timer;
 
-import platformer.CharacterJump.MyTimer;
-
 import java.awt.event.*;
 
 public class CharacterJump extends Applet implements ActionListener, ItemListener, KeyListener
@@ -79,11 +77,11 @@ public class CharacterJump extends Applet implements ActionListener, ItemListene
 		platform1.draw(g);
 		
 		//Put character on platform
-		charY = platform1.getY();
+		charY = platform1.getY() - charHeight;
 		
 		//Square to represent character
 		g.setColor(Color.black);
-		g.fillOval(charX, charY, charWidth, charHeight);
+		g.fillRect(charX, charY, charWidth, charHeight);
 		
 	}
 	
