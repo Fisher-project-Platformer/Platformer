@@ -1,3 +1,4 @@
+package platformer;
 /**
  * A platform is located at a given y-coordinate, fills the given width, and has a gap at a given x-coordinate.
  * For use the Platformer, a group project by Joseph Carman, Anthony Derfler, and Joseph Nielson for Mr. Rick Fisher's Java Programming class.
