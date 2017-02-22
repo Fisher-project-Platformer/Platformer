@@ -24,11 +24,11 @@ public class Menu
 	String pause = "Pause/Resume";
 	String quit = "Quit (Q)";
 	String start = "Start (Enter)";
-	
+	/*
 	//Images
 	Image a, d, w;
 	a getImage(getDocumentBase(), "");
-	
+	*/
 	//Note: Use drawString() for text.
 	
 }

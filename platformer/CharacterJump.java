@@ -20,7 +20,6 @@ public class CharacterJump extends Applet implements ActionListener, ItemListene
 	private int aHeight = 400, aWidth = 600;
 	int charX = aWidth / 2, charY = aHeight - 20;
 	int charWidth = 20, charHeight = 20;
-	double charVerticalSpeed = 0;
 	
 	//Constants
 	final double GRAVITY_ACCELERATION = -9.8;
@@ -28,6 +27,11 @@ public class CharacterJump extends Applet implements ActionListener, ItemListene
 	
 	//Images
 	Image character;
+	
+	//Variables for jumping
+	double charVerticalSpeed = 0;
+	int charLaunchY = 0;
+	//double charLaunchTime = 
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -39,6 +43,7 @@ public class CharacterJump extends Applet implements ActionListener, ItemListene
 		if (e.getKeyCode() == e.VK_UP)
 		{
 			charVerticalSpeed = Math.sqrt(-2 * GRAVITY_ACCELERATION * JUMP_HEIGHT);
+			charLaunchY = charY;
 		}
 	}
 	@Override
@@ -107,6 +112,7 @@ public class CharacterJump extends Applet implements ActionListener, ItemListene
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//Perform jump
+			//charY = 
 			
 			repaint();
 			
