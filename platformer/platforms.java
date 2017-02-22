@@ -1,6 +1,8 @@
 //Author Joseph Carman		Date 2/21/17
 //purpose trouble shoot existing Platfofrmer_Launch
 
+package platformer;
+
 import java.applet.Applet;
 import java.awt.*;
 import javax.swing.Timer;
@@ -17,7 +19,7 @@ public class platforms extends Applet
 	//declaring variables
 	int doorX, doorY; //the coordinates that describe the position of the door
 	int doorHeight, doorWidth; //the height and width of the door
-	int charY = 0, charX = 0; //the coordinates that describe the character's position
+	int charY = 80, charX = 20; //the coordinates that describe the character's position
 	int charHeight = 20, charWidth = 20; //width and height of the character
 	int xStep;//the sideways velocity for moving the character
 	int speedDown = 0;
@@ -25,7 +27,19 @@ public class platforms extends Applet
 	int boxWidth, boxHeight = 300; //the width and size of the start menu
 	int width = 1200, height = 600; //size of the window the program runs in
 	
-	// insert code for generating platforms here
+	//platforms
+	int platform1Y = 100;
+	int platform1GapLocation = (int)(width * 0.8);
+	
+	int platform2Y = 200;
+	int platform2GapLocation = (int)(width * 0.2);
+	
+	int platform3Y = 300;
+	int platform3GapLocation = (int)(width * 0.6);
+	
+	//menu
+	int menuX = 100;
+	int menuY = 100;
 	
 	public void init () //starts applet
 	{		
@@ -40,6 +54,17 @@ public class platforms extends Applet
 	{
 		g.setColor(Color.black); //sets the character's color to a light blue
 		g.fillRect(charX, charY, charWidth, charHeight); //sets the character's dimensions and starting coordinates
+		
+		//platforms
+		Platform platform1 = new Platform(width, platform1Y, platform1GapLocation);
+		platform1.draw(g);
+		
+		Platform platform2 = new Platform(width, platform2Y, platform2GapLocation);
+		platform2.draw(g);
+		
+		Platform platform3 = new Platform(width, platform3Y, platform3GapLocation);
+		platform3.draw(g);
+		
 		g.setColor(Color.GRAY);
 		g.fillRect(100, 100, boxWidth, boxHeight);
 	} //ends paint
