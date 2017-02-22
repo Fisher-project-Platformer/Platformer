@@ -15,6 +15,7 @@ public class Platform
 	private int platformY = 0; //Vertical location of platform
 	final int PLATFORM_HEIGHT = 20; //Height or thickness of platform
 	private int width = 0; //The given width of the applet
+	private Color platformColor = Color.GRAY;
 	
 	//Variables for gap
 	final int GAP_SIZE = 50; //Width of gap
@@ -39,7 +40,7 @@ public class Platform
 	public void draw(Graphics g)
 	{
 		//Set color
-		g.setColor(Color.blue);
+		g.setColor(platformColor);
 		
 		//Create 2 rectangles for each platform
 		//Left of gap
