@@ -3,7 +3,7 @@
 
 package platformer;
 
-import java.applet.Applet;
+import java.applet.*;
 import java.awt.*;
 import javax.swing.Timer;
 
@@ -24,7 +24,7 @@ public class platforms extends Applet
 	int xStep;//the sideways velocity for moving the character
 	int speedDown = 0;
 	public Timer timer;
-	int boxWidth, boxHeight = 300; //the width and size of the start menu
+	int boxWidth = 300, boxHeight = 300; //the width and size of the start menu
 	int width = 1200, height = 600; //size of the window the program runs in
 	
 	//platforms
@@ -41,6 +41,9 @@ public class platforms extends Applet
 	int menuX = 100;
 	int menuY = 100;
 	
+	//images
+	Image character;
+	
 	public void init () //starts applet
 	{		
 		// establishing general starting specs in the applet
@@ -48,13 +51,17 @@ public class platforms extends Applet
 		setBackground(Color.white); //sets the background of the applet to white
 		timer = new Timer(50, new MyTimer()); //sets 50 milliseconds as the time interval for MyTimer to be carried out
 		timer.start(); //starts the timer
+		
+		//Instantiates images
+		character = getImage(getCodeBase(), "test_image2.jpg");
+				
 	} //ends init
 	
 	public void paint(Graphics g)
-	{
+	{/*
 		g.setColor(Color.black); //sets the character's color to a light blue
 		g.fillRect(charX, charY, charWidth, charHeight); //sets the character's dimensions and starting coordinates
-		
+		*/
 		//platforms
 		Platform platform1 = new Platform(width, platform1Y, platform1GapLocation);
 		platform1.draw(g);
@@ -64,6 +71,9 @@ public class platforms extends Applet
 		
 		Platform platform3 = new Platform(width, platform3Y, platform3GapLocation);
 		platform3.draw(g);
+		
+		//Character
+		g.drawImage(character, charX, charY, this);
 		
 		g.setColor(Color.GRAY);
 		g.fillRect(100, 100, boxWidth, boxHeight);
