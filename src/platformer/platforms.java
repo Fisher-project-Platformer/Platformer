@@ -53,7 +53,8 @@ public class platforms extends Applet
 		timer.start(); //starts the timer
 		
 		//Instantiates images
-		character = getImage(getCodeBase(), "test_image2.jpg");
+		character = getImage(getCodeBase(), "platformer/apple.jpeg");
+		System.out.println("" + getCodeBase());
 				
 	} //ends init
 	
@@ -73,10 +74,16 @@ public class platforms extends Applet
 		platform3.draw(g);
 		
 		//Character
-		g.drawImage(character, charX, charY, this);
-		
-		g.setColor(Color.GRAY);
-		g.fillRect(100, 100, boxWidth, boxHeight);
+		try
+		{
+			g.drawImage(character, 100, 100, this);
+		}
+		catch (Exception e)
+		{
+			System.out.println("Error somewhere");
+		}
+		//g.setColor(Color.GRAY);
+		//g.fillRect(100, 100, boxWidth, boxHeight);
 	} //ends paint
 	
 	private class MyTimer implements ActionListener, KeyListener
