@@ -40,6 +40,7 @@ public class platforms extends Applet
 	//menu
 	int menuX = 100;
 	int menuY = 100;
+	Menu openMenu = new Menu(menuX, menuY);
 	
 	//images
 	Image character;
@@ -53,7 +54,7 @@ public class platforms extends Applet
 		timer.start(); //starts the timer
 		
 		//Instantiates images
-		character = getImage(getCodeBase(), "platformer/apple.jpeg");
+		character = getImage(getCodeBase(), "platformer/images/character.png");
 		System.out.println("" + getCodeBase());
 				
 	} //ends init
@@ -76,12 +77,17 @@ public class platforms extends Applet
 		//Character
 		try
 		{
-			g.drawImage(character, 100, 100, this);
+			g.drawImage(character, charX, charY, this);
 		}
 		catch (Exception e)
 		{
 			System.out.println("Error somewhere");
 		}
+		
+		//Menu
+		openMenu.defineImages(this);
+		openMenu.draw(g);
+		
 		//g.setColor(Color.GRAY);
 		//g.fillRect(100, 100, boxWidth, boxHeight);
 	} //ends paint
