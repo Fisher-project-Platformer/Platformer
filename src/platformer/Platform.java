@@ -13,7 +13,7 @@ public class Platform
 {
 	//Variables for platform
 	private int platformY = 0; //Vertical location of platform
-	final int PLATFORM_HEIGHT = 20; //Height or thickness of platform
+	final int PLATFORM_HEIGHT = 30; //Height or thickness of platform
 	private int width = 0; //The given width of the applet
 	private Color platformColor = Color.GRAY;
 	

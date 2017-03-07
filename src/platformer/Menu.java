@@ -1,6 +1,7 @@
 package platformer;
 
 import java.awt.*;
+import java.awt.image.*;
 import java.applet.*;
 
 /**
@@ -8,7 +9,9 @@ import java.applet.*;
  * @author Joseph Nielson
  * @version 1.0 2017-2-21
  */
-public class Menu
+
+//TODO: Add KeyListener
+public class Menu 
 {
 	//Variables
 	
@@ -25,16 +28,16 @@ public class Menu
 	
 	//Text
 	int numLines = 9;
-	private String[] text = new String[numLines];
-	
-	text[0] = "PLATFORMER";
-	text[1] = " ";
-	text[2] = "Move left or right";
-	text[3] = "Jump";
-	text[4] = "Pause/Resume";
-	text[5] = " ";
-	text[6] = "Quit (Q)";
-	text[7] = "Start (Enter)";
+	String[] text = new String[]{
+			"PLATFORMER",
+			" ",
+			"\u2190 \u2192    Move left or right",
+			"\u2191          Jump",
+			"SPACE  Pause/Resume",
+			" ",
+			"Quit (Q)",
+			"Start (Enter)"
+			};
 	
 	int lineSpacing = 25;
 	int topMargin = 50;
@@ -42,9 +45,6 @@ public class Menu
 	
 	//Fonts
 	private Font menuFont = new Font("SansSerif", Font.PLAIN, 19);
-	
-	//Images
-	Image left, right, up, space;
 	
 	/**
 	 * Creates a Menu object at the given location (x, y). 
@@ -72,26 +72,14 @@ public class Menu
 		menuY = y;
 		menuWidth = width;
 		menuHeight = height;
-	}
-	
-	/**
-	 * Defines the images needed for the menu.
-	 * @param applet
-	 */
-	public void defineImages(Applet applet)
-	{
-		//Instantiate images
-		left = applet.getImage(applet.getCodeBase(), "platformer/images/left_arrow.jpeg");
-		right = applet.getImage(applet.getCodeBase(), "platformer/images/right_arrow.jpeg");
-		up = applet.getImage(applet.getCodeBase(), "platformer/images/up_arrow.jpeg");
-		space = applet.getImage(applet.getCodeBase(), "platformer/images/space_key.jpeg");		
+		leftMargin = width / 2 - 50;
 	}
 	
 	/**
 	 * Draws the Menu
 	 * @param g a reference to a Graphics object
 	 */
-	public void draw(Graphics g)
+	public void draw(Graphics g, ImageObserver applet)
 	{
 		
 		//Background
@@ -104,14 +92,10 @@ public class Menu
 		g.setColor(textColor);
 		g.setFont(menuFont);
 		
-		g.drawString(title, textX, textY);
-		g.drawString(move, textX, textY + 2 * lineSpacing);
-		g.drawString(jump, textX, textY + 3 * lineSpacing);
-		g.drawString(pause, textX, textY + 4 * lineSpacing);
-		g.drawString(quit, textX, textY + 6 * lineSpacing);
-		g.drawString(start, textX, textY + 7 * lineSpacing);
+		for (int i = 0; i < text.length; i++)
+		{
+			g.drawString(text[i], textX, textY + i * lineSpacing);
+		}
 		
-		//Place images
-		g.drawImage(l)
 	}
 }
