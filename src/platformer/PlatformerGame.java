@@ -19,8 +19,9 @@ public class PlatformerGame extends Applet
 	//Locations and sizes
 	int aWidth = 1200, aHeight = 600;
 	final int PLATFORM_SPACING = 100; 
-	final int NUMBER_OF_PLATFORMS = 6;
-	Platform[] platformArray = new Platform[NUMBER_OF_PLATFORMS];
+	final int NUMBER_OF_PLATFORMS = 10;
+	final int FIRST_PLATFORM_LOCATION = 550;
+	PlatformSet platforms = new PlatformSet(aWidth, FIRST_PLATFORM_LOCATION, NUMBER_OF_PLATFORMS);
 	
 	//Other variables
 	public Timer timer;
@@ -49,10 +50,7 @@ public class PlatformerGame extends Applet
 	public void paint(Graphics g)
 	{
 		//Draw platforms
-		for (int i = 0; i < NUMBER_OF_PLATFORMS; i ++)
-		{
-			platformArray[i] = new Platform();
-		}
+		platforms.draw(g);
 	}
 	
 	/**

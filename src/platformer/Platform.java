@@ -66,4 +66,35 @@ public class Platform
 	{
 		this.platformY = newY;
 	}
+	
+	/**
+	 * Returns the x-location of the gap in the platform.
+	 * @return the x-location of the gap in the platform
+	 */
+	public int getGapLocation()
+	{
+		return gapLocation;
+	}
+	
+	/**
+	 * Returns true if the given rectangle intersects any part of the platform. Returns false otherwise.
+	 * @param toTest a Rectangle to test for intersection with the platform
+	 * @return true if the given rectangle intersects any part of the platform
+	 */
+	public boolean isIntersecting(Rectangle toTest)
+	{
+		//Create two rectangles to represent platform
+		Rectangle leftRect = new Rectangle(0, platformY, gapLocation, PLATFORM_HEIGHT);
+		Rectangle rightRect = new Rectangle(gapLocation + GAP_SIZE, platformY, width - gapLocation - GAP_SIZE, PLATFORM_HEIGHT);
+		
+		//Test for intersection
+		if (toTest.intersects(leftRect) || toTest.intersects(rightRect))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
