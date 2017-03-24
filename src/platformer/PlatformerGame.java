@@ -23,11 +23,18 @@ public class PlatformerGame extends Applet
 	final int FIRST_PLATFORM_LOCATION = 550;
 	PlatformSet platforms = new PlatformSet(aWidth, FIRST_PLATFORM_LOCATION, NUMBER_OF_PLATFORMS);
 	
+	//menu
+	int menuX = 100;
+	int menuY = 100;
+	int menuWidth = aWidth - 200;
+	int menuHeight = aHeight - 200;
+	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
+	
 	//Other variables
 	public Timer timer;
 	final int FIRING_INTERVAL = 50;
 	boolean isScrolling = false;
-	int downwardVelocity = 10;
+	int downwardVelocity = 2;
 	
 	/**
 	 * Runs when the Applet starts. Sets size and color of Applet and starts timer.
@@ -52,6 +59,9 @@ public class PlatformerGame extends Applet
 	{
 		//Draw platforms
 		platforms.draw(g);
+		
+		//Draw menu	
+		openMenu.draw(g, this);
 	}
 	
 	/**
@@ -66,7 +76,12 @@ public class PlatformerGame extends Applet
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
-			platforms.scrollDown(downwardVelocity);
+			if (isScrolling)
+			{
+				platforms.scrollDown(downwardVelocity);
+			}
+			
+			repaint();
 			
 		}
 
