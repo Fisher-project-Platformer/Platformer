@@ -20,16 +20,18 @@ public class MainTimer extends java.applet.Applet
 
 	int textPosx = appletSizex - 90; //x position of the text
 	int textPosy = 35; //y position of the text
+	
 	int boxPosx = appletSizex - 95; //x position of the box around the timer
 	int boxPosy = 0; //y position of the box around the timer
-	int boxSizex = 95;
-	int boxSizey = 50;
+	
+	int boxSizex = 95; //x dimensions of the box
+	int boxSizey = 50; //y dimensions of the box
 	
 	
 	int start = (int) System.currentTimeMillis(); //get the CPU time right as the program starts
 	int change; //initialize the CPU time that will refresh itself via the timer
 	
-	Font stringFont = new Font("Monospaced", Font.BOLD, 35); //make the font for the text
+	static Font stringFont = new Font("Monospaced", Font.BOLD, 35); //make the font for the text
 	
 	
 	public void init()
