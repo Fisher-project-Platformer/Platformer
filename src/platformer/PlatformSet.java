@@ -146,7 +146,7 @@ public class PlatformSet
 			}
 		}
 		
-		//Return false if not intersectin
+		//Return false if not intersection
 		return false;
 	}
 }

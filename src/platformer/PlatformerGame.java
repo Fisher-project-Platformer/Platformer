@@ -69,7 +69,7 @@ public class PlatformerGame extends Applet
 			
 		}
 
-	}
+	}//End PlatformerTimer
 
 	
 	/**
@@ -77,4 +77,4 @@ public class PlatformerGame extends Applet
 	 */
 	private static final long serialVersionUID = 1L;
 
-}
+}//End PlatformerGame
