@@ -34,7 +34,15 @@ public class PlatformerGame extends Applet implements KeyListener
 	//Other variables
 	public Timer timer;
 	final int FIRING_INTERVAL = 50;
+	
+	//menu variables
 	boolean isScrolling = false;
+	int menuX = 100;
+	int menuY = 100;
+	int menuWidth = aWidth - 200;
+	int menuHeight = aHeight - 200;
+	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
+
 	
 	//code below describes player movement side to side
 		public void keyReleased(KeyEvent p)//actions to be performed on key release
@@ -57,6 +65,13 @@ public class PlatformerGame extends Applet implements KeyListener
 			
 			if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
 				Move.w=true;
+			
+			if (p.getKeyChar() == ' ' && isScrolling == true)
+				isScrolling=false;
+			
+			else if (p.getKeyChar() == ' ' && isScrolling == false)
+				isScrolling=true;
+			
 			
 		}//ends keyPressed
 		
@@ -92,8 +107,13 @@ public class PlatformerGame extends Applet implements KeyListener
 	{
 		//Draw platforms
 		platforms.draw(g);
+		
+		//paints character
 		g.setColor(Color.black);
         g.fillRect(Move.xPosit,Move.yPosit,charHeight,charWidth);
+        
+        //paints menu
+        if(isScrolling) openMenu.draw(g, this);
 	}
 	
 	/**

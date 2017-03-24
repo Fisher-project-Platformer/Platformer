@@ -32,6 +32,7 @@ public class Move extends Rectangle {
 		
     public static void tick()
     {
+    	
     	grav=(int) (.25*count*count);	
     	//controls ability to move in the directions specified
     	if(xPosit<=0)left=false;
