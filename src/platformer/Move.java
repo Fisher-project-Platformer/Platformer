@@ -13,7 +13,7 @@ public class Move extends Rectangle {
 	private static boolean down = true;
 	private static boolean left = true;
 	private static boolean right = true;
-    private static int speed = 5;
+    private static int speed = 8;
  	private static int dx=0;
 	static int dy=0;
 	static int count=0;
@@ -36,7 +36,7 @@ public class Move extends Rectangle {
     	grav=(int) (.25*count*count);	
     	//controls ability to move in the directions specified
     	if(xPosit<=0)left=false;
-    	if(xPosit>=1200)right=false;
+    	if(xPosit>=1180)right=false;
     	if(yPosit<=0)up=false;
     	if(yPosit>=600)down=false;
     	
