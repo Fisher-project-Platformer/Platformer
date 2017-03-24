@@ -25,18 +25,29 @@ public class PlatformerGame extends Applet implements KeyListener
 	final int FIRST_PLATFORM_LOCATION = 550;
 	PlatformSet platforms = new PlatformSet(aWidth, FIRST_PLATFORM_LOCATION, NUMBER_OF_PLATFORMS);
 	
+
 	//character variables
 	static int charHeight = 20; //width and height of the character
 	static int charWidth = 20;
 	int charY=aHeight-charHeight, charX=0; //the coordinates that describe the character's position
 	Move character1;
+
+	//menu
+	int menuX = 100;
+	int menuY = 100;
+	int menuWidth = aWidth - 200;
+	int menuHeight = aHeight - 200;
+	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
+
 	
 	//Other variables
 	public Timer timer;
 	final int FIRING_INTERVAL = 50;
+  int downwardVelocity = 2;
 	
 	//menu variables
 	boolean isScrolling = false;
+
 	int menuX = 100;
 	int menuY = 100;
 	int menuWidth = aWidth - 200;
@@ -78,6 +89,7 @@ public class PlatformerGame extends Applet implements KeyListener
 		public void keyTyped(KeyEvent p)
 		{
 		}//ends keyTyped
+
 	
 	/**
 	 * Runs when the Applet starts. Sets size and color of Applet and starts timer.
@@ -108,12 +120,15 @@ public class PlatformerGame extends Applet implements KeyListener
 		//Draw platforms
 		platforms.draw(g);
 		
+
 		//paints character
-		g.setColor(Color.black);
-        g.fillRect(Move.xPosit,Move.yPosit,charHeight,charWidth);
+		  g.setColor(Color.black);
+      g.fillRect(Move.xPosit,Move.yPosit,charHeight,charWidth);
         
-        //paints menu
-        if(isScrolling) openMenu.draw(g, this);
+        //s menu
+        if(!isScrolling) openMenu.draw(g, this);
+
+
 	}
 	
 	/**
@@ -128,9 +143,18 @@ public class PlatformerGame extends Applet implements KeyListener
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
+
 			// TODO Auto-generated method stub
 			Move.tick();//calls the method tick from class move
-			repaint(); //repaints after conditions are tested for and resulting action is performed
+
+			if (isScrolling)
+			{
+				platforms.scrollDown(downwardVelocity);
+			}
+			
+			repaint();
+			
+
 		}
 
 	}
