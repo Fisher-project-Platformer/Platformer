@@ -5,11 +5,12 @@ public class jumping {
 	{
 		Move.dy=-31+(Move.grav);
         Move.count++;
-        if(Move.yPosit == 600)
+        if(Move.yPosit >= 600)
         {
+        	Move.yPosit = PlatformerGame.aHeight- ;
             Move.count = 0;
             Move.reset = false;
-            return false;
+            w = false;
         }
         return w;
     }

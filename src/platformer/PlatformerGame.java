@@ -92,7 +92,8 @@ public class PlatformerGame extends Applet implements KeyListener
 	{
 		//Draw platforms
 		platforms.draw(g);
-		Move.paint(g);
+		g.setColor(Color.black);
+        g.fillRect(Move.xPosit,Move.yPosit,charHeight,charWidth);
 	}
 	
 	/**
