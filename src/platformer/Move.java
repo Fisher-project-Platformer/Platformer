@@ -70,6 +70,10 @@ public class Move extends Rectangle {
         right = true;
     }
     
-   
+    public static void paint(Graphics g)
+    {
+        g.setColor(Color.black);
+        g.fillRect(Move.xPosit,Move.yPosit,PlatformerGame.charHeight,PlatformerGame.charWidth);
+    }
     
 }
