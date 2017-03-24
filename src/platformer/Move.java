@@ -32,6 +32,7 @@ public class Move extends Rectangle {
 		
     public static void tick()
     {
+    	
     	grav=(int) (.25*count*count);	
     	//controls ability to move in the directions specified
     	if(xPosit<=0)left=false;
@@ -70,6 +71,10 @@ public class Move extends Rectangle {
         right = true;
     }
     
-   
+    public void paint(Graphics g)
+    {
+        g.setColor(Color.black);
+        g.fillRect(Move.xPosit,Move.yPosit,PlatformerGame.charHeight,PlatformerGame.charWidth);
+    }
     
 }
