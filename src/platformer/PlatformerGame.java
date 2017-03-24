@@ -16,24 +16,28 @@ import javax.swing.Timer;
  */
 public class PlatformerGame extends Applet
 {
-	//Locations and sizes
+	//Applet
 	int aWidth = 1200, aHeight = 600;
+	
+	//Platforms
 	final int PLATFORM_SPACING = 100; 
 	final int NUMBER_OF_PLATFORMS = 10;
 	final int FIRST_PLATFORM_LOCATION = 550;
 	PlatformSet platforms = new PlatformSet(aWidth, FIRST_PLATFORM_LOCATION, NUMBER_OF_PLATFORMS);
 	
-	//menu
+	//Menu
 	int menuX = 100;
 	int menuY = 100;
 	int menuWidth = aWidth - 200;
 	int menuHeight = aHeight - 200;
 	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
 	
-	//Other variables
+	//Timer
 	public Timer timer;
 	final int FIRING_INTERVAL = 50;
-	boolean isScrolling = false;
+	
+	//Conditions
+	boolean isPaused = true;
 	int downwardVelocity = 2;
 	
 	/**
@@ -60,8 +64,11 @@ public class PlatformerGame extends Applet
 		//Draw platforms
 		platforms.draw(g);
 		
-		//Draw menu	
-		openMenu.draw(g, this);
+		//Draw menu
+		if (isPaused)
+		{
+			openMenu.draw(g, this);
+		}
 	}
 	
 	/**
@@ -76,7 +83,7 @@ public class PlatformerGame extends Applet
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
-			if (isScrolling)
+			if (!isPaused)
 			{
 				platforms.scrollDown(downwardVelocity);
 			}
