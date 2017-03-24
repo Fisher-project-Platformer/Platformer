@@ -13,7 +13,7 @@ public class Platform
 {
 	//Variables for platform
 	private int platformY = 0; //Vertical location of platform
-	final int PLATFORM_HEIGHT = 20; //Height or thickness of platform
+	final int PLATFORM_HEIGHT = 30; //Height or thickness of platform
 	private int width = 0; //The given width of the applet
 	private Color platformColor = Color.GRAY;
 	
@@ -65,5 +65,36 @@ public class Platform
 	public void setY(int newY)
 	{
 		this.platformY = newY;
+	}
+	
+	/**
+	 * Returns the x-location of the gap in the platform.
+	 * @return the x-location of the gap in the platform
+	 */
+	public int getGapLocation()
+	{
+		return gapLocation;
+	}
+	
+	/**
+	 * Returns true if the given rectangle intersects any part of the platform. Returns false otherwise.
+	 * @param toTest a Rectangle to test for intersection with the platform
+	 * @return true if the given rectangle intersects any part of the platform
+	 */
+	public boolean isIntersecting(Rectangle toTest)
+	{
+		//Create two rectangles to represent platform
+		Rectangle leftRect = new Rectangle(0, platformY, gapLocation, PLATFORM_HEIGHT);
+		Rectangle rightRect = new Rectangle(gapLocation + GAP_SIZE, platformY, width - gapLocation - GAP_SIZE, PLATFORM_HEIGHT);
+		
+		//Test for intersection
+		if (toTest.intersects(leftRect) || toTest.intersects(rightRect))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
