@@ -27,6 +27,7 @@ public class PlatformerGame extends Applet
 	public Timer timer;
 	final int FIRING_INTERVAL = 50;
 	boolean isScrolling = false;
+	int downwardVelocity = 10;
 	
 	/**
 	 * Runs when the Applet starts. Sets size and color of Applet and starts timer.
@@ -65,7 +66,7 @@ public class PlatformerGame extends Applet
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
-			// TODO Auto-generated method stub
+			platforms.scrollDown(downwardVelocity);
 			
 		}
 
