@@ -14,11 +14,10 @@ public class Move extends Rectangle {
 	private static boolean left = true;
 	private static boolean right = true;
     private static int speed = 5;
-    private static int jumpSpeed = 30;
-	private static int dx=0;
+ 	private static int dx=0;
 	static int dy=0;
 	static int count=0;
-	private static int grav;
+	static int grav;
     public static int xPosit;
 	public static int yPosit;
 	public int x, y;
