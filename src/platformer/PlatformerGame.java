@@ -54,8 +54,7 @@ public class PlatformerGame extends Applet implements KeyListener
 	int change; //initialize the CPU time that will refresh itself via the timer
 	Font stringFont = new Font("Monospaced", Font.BOLD, 35); //make the font for the text
 	//pause variables
-	boolean pause = false;
-	int pauseTimeOne = 0;
+	int pauseTimeOne = (int) System.currentTimeMillis();
 	int pauseTimeTwo = 0;
 	
 	//Other variables
@@ -90,28 +89,22 @@ public class PlatformerGame extends Applet implements KeyListener
 				Move.w=true;
 			
 			if (p.getKeyChar() == ' ' && isScrolling == true)
+			{
 				isScrolling=false;
+				
+				//timer stuff
+				pauseTimeOne = (int) System.currentTimeMillis();
+				
+			}
 			
 			else if (p.getKeyChar() == ' ' && isScrolling == false)
+			{	
 				isScrolling=true;
-			
-			//paused timer
-			if (p.getKeyCode() == KeyEvent.VK_SPACE && pause == false)
-			{
-				pauseTimeOne = (int) System.currentTimeMillis();
-				pause = true;
-				System.out.println("paused");
-			} //end pause
-			
-			//unpause it
-			else if (p.getKeyCode() == KeyEvent.VK_SPACE && pause == true)
-			{
-				pause = false;
-				System.out.println("not");
+				
+				//timer stuff
 				pauseTimeTwo = (int) System.currentTimeMillis();
 				start += pauseTimeTwo - pauseTimeOne;
-			} //end unpause
-			
+			}
 		}//ends keyPressed
 		
 		public void keyTyped(KeyEvent p)
@@ -201,13 +194,13 @@ public class PlatformerGame extends Applet implements KeyListener
 			//timer
 			
 			change = (int) System.currentTimeMillis();
-			if (pause == false) //functioning normally
+			if (isScrolling == true) //functioning normally
 			{
 				minutes = Timer2.getMinutes(change, start);
 				seconds = Timer2.getSeconds(change, start);
 			}
 			
-			if (pause == true) //functioning while paused
+			if (isScrolling == false) //functioning while paused
 			{
 				minutes = Timer2.getMinutes(pauseTimeOne, start);
 				seconds = Timer2.getSeconds(pauseTimeOne, start);
@@ -215,8 +208,6 @@ public class PlatformerGame extends Applet implements KeyListener
 			//update the time
 			
 			repaint();
-			
-
 		}
 
 	}
