@@ -111,8 +111,6 @@ public class MainTimer extends java.applet.Applet implements KeyListener
 			}
 			//update the time
 			
-			
-			
 			repaint();
 		} //end actions performed
 	}//end Timer

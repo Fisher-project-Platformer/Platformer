@@ -53,6 +53,10 @@ public class PlatformerGame extends Applet implements KeyListener
 	int start = (int) System.currentTimeMillis(); //get the CPU time right as the program starts
 	int change; //initialize the CPU time that will refresh itself via the timer
 	Font stringFont = new Font("Monospaced", Font.BOLD, 35); //make the font for the text
+	//pause variables
+	boolean pause = false;
+	int pauseTimeOne = 0;
+	int pauseTimeTwo = 0;
 	
 	//Other variables
 	public Timer timer;
@@ -91,6 +95,22 @@ public class PlatformerGame extends Applet implements KeyListener
 			else if (p.getKeyChar() == ' ' && isScrolling == false)
 				isScrolling=true;
 			
+			//paused timer
+			if (p.getKeyCode() == KeyEvent.VK_SPACE && pause == false)
+			{
+				pauseTimeOne = (int) System.currentTimeMillis();
+				pause = true;
+				System.out.println("paused");
+			} //end pause
+			
+			//unpause it
+			else if (p.getKeyCode() == KeyEvent.VK_SPACE && pause == true)
+			{
+				pause = false;
+				System.out.println("not");
+				pauseTimeTwo = (int) System.currentTimeMillis();
+				start += pauseTimeTwo - pauseTimeOne;
+			} //end unpause
 			
 		}//ends keyPressed
 		
@@ -179,9 +199,19 @@ public class PlatformerGame extends Applet implements KeyListener
 			}
 			
 			//timer
+			
 			change = (int) System.currentTimeMillis();
-			minutes = Timer2.getMinutes(change, start);
-			seconds = Timer2.getSeconds(change, start);
+			if (pause == false) //functioning normally
+			{
+				minutes = Timer2.getMinutes(change, start);
+				seconds = Timer2.getSeconds(change, start);
+			}
+			
+			if (pause == true) //functioning while paused
+			{
+				minutes = Timer2.getMinutes(pauseTimeOne, start);
+				seconds = Timer2.getSeconds(pauseTimeOne, start);
+			}
 			//update the time
 			
 			repaint();
