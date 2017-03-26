@@ -61,7 +61,10 @@ public class platforms extends Applet
 	} //ends init
 	
 	public void paint(Graphics g)
-	{/*
+	{
+		//Character
+		g.drawImage(character, charX, charY, this);
+		/*
 		g.setColor(Color.black); //sets the character's color to a light blue
 		g.fillRect(charX, charY, charWidth, charHeight); //sets the character's dimensions and starting coordinates
 		*/
@@ -75,8 +78,6 @@ public class platforms extends Applet
 		Platform platform3 = new Platform(width, platform3Y, platform3GapLocation);
 		platform3.draw(g);
 		
-		//Character
-		g.drawImage(character, charX, charY, this);
 		
 		//Menu	
 		openMenu.draw(g, this);
