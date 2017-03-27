@@ -27,7 +27,6 @@ public class Move extends Rectangle {
 		// TODO Auto-generated constructor stub
 		xPosit=charX;
 		yPosit=charY;
-		System.out.println(charX);
 	}
 		
     public static void tick()
@@ -74,7 +73,15 @@ public class Move extends Rectangle {
     {
     	if (!w && reset)
     	{
-    		yPosit += amount;
+    		dy = amount;
+    		
+    		if(!PlatformerGame.isPlaying) dy=0;
+    		
+    		//Not on platform
+    		if (!w)
+    		{
+    			dy = amount + grav;
+    		}
     	}
     }
     

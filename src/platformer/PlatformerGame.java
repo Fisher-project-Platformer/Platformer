@@ -88,33 +88,25 @@ public class PlatformerGame extends Applet implements KeyListener
 			if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
 				Move.w=true;
 			
+			if (p.getKeyCode() == KeyEvent.VK_Q)//if the Q key is pressed
+				System.exit(0);
+			
 
 			if (p.getKeyChar() == ' ' && isPlaying == true)
-				isPlaying=false;
-			
-			else if (p.getKeyChar() == ' ' && isPlaying == false)
-				isPlaying=true;
-			
-			
-
-			if (p.getKeyChar() == ' ' && isScrolling == true)
 			{
-				isScrolling=false;
-				
+				isPlaying=false;
 				//timer stuff
 				pauseTimeOne = (int) System.currentTimeMillis();
-				
 			}
 			
-			else if (p.getKeyChar() == ' ' && isScrolling == false)
-			{	
-				isScrolling=true;
-				
+			else if (p.getKeyChar() == ' ' && isPlaying == false)
+			{
+				isPlaying=true;
 				//timer stuff
 				pauseTimeTwo = (int) System.currentTimeMillis();
 				start += pauseTimeTwo - pauseTimeOne;
 			}
-
+					
 		}//ends keyPressed
 		
 		public void keyTyped(KeyEvent p)
@@ -151,9 +143,6 @@ public class PlatformerGame extends Applet implements KeyListener
 		//Draw platforms
 		platforms.draw(g);
 		
-		//Draw menu	
-		openMenu.draw(g, this);
-		
 		//Timer
 		g.setColor(Color.gray); //create the box
 		g.fillRect(boxPosx, boxPosy, boxSizex, boxSizey); //fill the box
@@ -173,10 +162,11 @@ public class PlatformerGame extends Applet implements KeyListener
 		  g.setColor(Color.black);
       g.fillRect(Move.xPosit,Move.yPosit,charHeight,charWidth);
         
-        //s menu
+        //draws menu
         if(!isPlaying) openMenu.draw(g, this);
 
-
+        g.setColor(Color.CYAN);
+		g.drawString(""+Move.yPosit+"," + Move.dy, 100, 100);
 
 	}
 	
@@ -192,7 +182,6 @@ public class PlatformerGame extends Applet implements KeyListener
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
-			Move.tick();//calls the method tick from class move
 
 			if (isPlaying)
 			{
@@ -200,16 +189,17 @@ public class PlatformerGame extends Applet implements KeyListener
 				Move.scrollDown(downwardVelocity);
 			}
 			
+			Move.tick();//calls the method tick from class moved
 			//timer
 			
 			change = (int) System.currentTimeMillis();
-			if (isScrolling == true) //functioning normally
+			if (isPlaying == true) //functioning normally
 			{
 				minutes = Timer2.getMinutes(change, start);
 				seconds = Timer2.getSeconds(change, start);
 			}
 			
-			if (isScrolling == false) //functioning while paused
+			if (isPlaying == false) //functioning while paused
 			{
 				minutes = Timer2.getMinutes(pauseTimeOne, start);
 				seconds = Timer2.getSeconds(pauseTimeOne, start);
