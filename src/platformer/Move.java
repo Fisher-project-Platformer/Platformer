@@ -33,12 +33,12 @@ public class Move extends Rectangle {
     public static void tick()
     {
     	
-    	grav=(int) (.25*count*count);	
+    	grav=(int)(.25*count*count);	
     	//controls ability to move in the directions specified
     	if(xPosit<=0)left=false;
     	if(xPosit>=1180)right=false;
     	if(yPosit<=0)up=false;
-    	if(yPosit>=600)down=false;
+    	if(yPosit>=580)down=false;
     	
     	//sets the change of x and y as the speed in the respective direction
         if(a)dx-=speed;
@@ -60,7 +60,6 @@ public class Move extends Rectangle {
         yPosit+=dy;
         
         //resets the change of x and y to 0
-        dy=0;
         dx=0;
         
         
@@ -71,10 +70,14 @@ public class Move extends Rectangle {
         right = true;
     }
     
-    public void paint(Graphics g)
+    public static void scrollDown(int amount)
     {
-        g.setColor(Color.black);
-        g.fillRect(Move.xPosit,Move.yPosit,PlatformerGame.charHeight,PlatformerGame.charWidth);
+    	if (!w && reset)
+    	{
+    		yPosit += amount;
+    	}
     }
+    
+   
     
 }

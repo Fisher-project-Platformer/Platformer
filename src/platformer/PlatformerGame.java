@@ -29,7 +29,7 @@ public class PlatformerGame extends Applet implements KeyListener
 	//character variables
 	static int charHeight = 20; //width and height of the character
 	static int charWidth = 20;
-	int charY=aHeight-charHeight, charX=0; //the coordinates that describe the character's position
+	int charY=0, charX=0; //the coordinates that describe the character's position
 	Move character1;
 	
 	//Other variables
@@ -38,7 +38,7 @@ public class PlatformerGame extends Applet implements KeyListener
   int downwardVelocity = 2;
 	
 	//menu variables
-	boolean isPlaying = false;
+	static boolean isPlaying = false;
 	int menuX = 100;
 	int menuY = 100;
 	int menuWidth = aWidth - 200;
@@ -134,14 +134,12 @@ public class PlatformerGame extends Applet implements KeyListener
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
-			System.out.print(Move.w);
-			System.out.print(Move.reset + " ");
-			// TODO Auto-generated method stub
 			Move.tick();//calls the method tick from class move
 
 			if (isPlaying)
 			{
 				platforms.scrollDown(downwardVelocity);
+				Move.scrollDown(downwardVelocity);
 			}
 			
 			repaint();
