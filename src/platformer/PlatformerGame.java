@@ -2,6 +2,7 @@ package platformer;
 
 import java.applet.Applet;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +33,22 @@ public class PlatformerGame extends Applet implements KeyListener
 	int charY=0, charX=0; //the coordinates that describe the character's position
 	Move character1;
 	
+	//timer
+	int minutes = 0; //minutes
+	int seconds = 0; //seconds
+	int textPosx = aWidth - 90; //x position of the text
+	int textPosy = 35; //y position of the text
+	int boxPosx = aWidth - 95; //x position of the box around the timer
+	int boxPosy = 0; //y position of the box around the timer
+	int boxSizex = 95;
+	int boxSizey = 50;
+	int start = (int) System.currentTimeMillis(); //get the CPU time right as the program starts
+	int change; //initialize the CPU time that will refresh itself via the timer
+	Font stringFont = new Font("Monospaced", Font.BOLD, 35); //make the font for the text
+	//pause variables
+	int pauseTimeOne = (int) System.currentTimeMillis();
+	int pauseTimeTwo = 0;
+	
 	//Other variables
 	public Timer timer;
 	final int FIRING_INTERVAL = 50;
@@ -44,6 +61,9 @@ public class PlatformerGame extends Applet implements KeyListener
 	int menuWidth = aWidth - 200;
 	int menuHeight = aHeight - 200;
 	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
+
+	//boolean isScrolling = false;
+
 
 	
 	//code below describes player movement side to side
@@ -68,6 +88,7 @@ public class PlatformerGame extends Applet implements KeyListener
 			if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
 				Move.w=true;
 			
+
 			if (p.getKeyChar() == ' ' && isPlaying == true)
 				isPlaying=false;
 			
@@ -75,6 +96,25 @@ public class PlatformerGame extends Applet implements KeyListener
 				isPlaying=true;
 			
 			
+
+			if (p.getKeyChar() == ' ' && isScrolling == true)
+			{
+				isScrolling=false;
+				
+				//timer stuff
+				pauseTimeOne = (int) System.currentTimeMillis();
+				
+			}
+			
+			else if (p.getKeyChar() == ' ' && isScrolling == false)
+			{	
+				isScrolling=true;
+				
+				//timer stuff
+				pauseTimeTwo = (int) System.currentTimeMillis();
+				start += pauseTimeTwo - pauseTimeOne;
+			}
+
 		}//ends keyPressed
 		
 		public void keyTyped(KeyEvent p)
@@ -111,6 +151,23 @@ public class PlatformerGame extends Applet implements KeyListener
 		//Draw platforms
 		platforms.draw(g);
 		
+		//Draw menu	
+		openMenu.draw(g, this);
+		
+		//Timer
+		g.setColor(Color.gray); //create the box
+		g.fillRect(boxPosx, boxPosy, boxSizex, boxSizey); //fill the box
+		g.setColor(Color.CYAN); //create the text
+		g.setFont(stringFont); //set its font
+		if (seconds >= 10)
+			g.drawString(Integer.toString(minutes) + ":" +
+					Integer.toString(seconds), textPosx, textPosy);
+		//if the seconds are greater than 10, you don't need an extra 0 in the timer
+		
+		if (seconds < 10)
+			g.drawString(Integer.toString(minutes) + ":0" + 
+					Integer.toString(seconds), textPosx, textPosy);
+		//if the seconds are less than 10, you do need that extra 0
 
 		//paints character
 		  g.setColor(Color.black);
@@ -118,6 +175,7 @@ public class PlatformerGame extends Applet implements KeyListener
         
         //s menu
         if(!isPlaying) openMenu.draw(g, this);
+
 
 
 	}
@@ -142,9 +200,23 @@ public class PlatformerGame extends Applet implements KeyListener
 				Move.scrollDown(downwardVelocity);
 			}
 			
-			repaint();
+			//timer
 			
-
+			change = (int) System.currentTimeMillis();
+			if (isScrolling == true) //functioning normally
+			{
+				minutes = Timer2.getMinutes(change, start);
+				seconds = Timer2.getSeconds(change, start);
+			}
+			
+			if (isScrolling == false) //functioning while paused
+			{
+				minutes = Timer2.getMinutes(pauseTimeOne, start);
+				seconds = Timer2.getSeconds(pauseTimeOne, start);
+			}
+			//update the time
+			
+			repaint();
 		}
 
 	}

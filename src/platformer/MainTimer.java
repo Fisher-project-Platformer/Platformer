@@ -8,8 +8,13 @@ import javax.swing.Timer;
 import java.awt.event.*;
 import java.awt.Font;
 
-public class MainTimer extends java.applet.Applet
+public class MainTimer extends java.applet.Applet implements KeyListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Timer timer;
 	
 	int minutes = 0; //minutes
@@ -25,6 +30,10 @@ public class MainTimer extends java.applet.Applet
 	int boxSizex = 95;
 	int boxSizey = 50;
 	
+	//pause variables
+	boolean pause = false;
+	int pauseTimeOne = 0;
+	int pauseTimeTwo = 0;
 	
 	int start = (int) System.currentTimeMillis(); //get the CPU time right as the program starts
 	int change; //initialize the CPU time that will refresh itself via the timer
@@ -40,6 +49,10 @@ public class MainTimer extends java.applet.Applet
 		timer = new Timer(100, new MyTimer() );
 		timer.start();
 		//timer stuff
+		
+		addKeyListener(this);
+		
+		setFocusable(true);
 	} //end init
 	
 	public void paint (Graphics g)
@@ -60,16 +73,49 @@ public class MainTimer extends java.applet.Applet
 
 	} //end Graphics g
 	
+	public void keyPressed(java.awt.event.KeyEvent e)
+	{
+		//pause the timer
+		if (e.getKeyCode() == KeyEvent.VK_SPACE && pause == false)
+		{
+			pauseTimeOne = (int) System.currentTimeMillis();
+			pause = true;
+			System.out.println("paused");
+		} //end pause
+		
+		//unpause it
+		else if (e.getKeyCode() == KeyEvent.VK_SPACE && pause == true)
+		{
+			pause = false;
+			System.out.println("not");
+			pauseTimeTwo = (int) System.currentTimeMillis();
+			start += pauseTimeTwo - pauseTimeOne;
+		} //end unpause
+	} //end KeyPressed
+	
 	public class MyTimer implements ActionListener
 	{
 		public void actionPerformed(ActionEvent a)
 		{
 			change = (int) System.currentTimeMillis();
-			minutes = Timer2.getMinutes(change, start);
-			seconds = Timer2.getSeconds(change, start);
+			if (pause == false) //functioning normally
+			{
+				minutes = Timer2.getMinutes(change, start);
+				seconds = Timer2.getSeconds(change, start);
+			}
+			
+			if (pause == true) //functioning while paused
+			{
+				minutes = Timer2.getMinutes(pauseTimeOne, start);
+				seconds = Timer2.getSeconds(pauseTimeOne, start);
+			}
 			//update the time
 			
 			repaint();
 		} //end actions performed
 	}//end Timer
+
+	public void keyTyped(KeyEvent e) {}
+
+	public void keyReleased(KeyEvent e) {}
 }//end Main Timer
