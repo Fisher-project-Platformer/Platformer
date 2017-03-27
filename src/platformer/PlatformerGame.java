@@ -30,16 +30,8 @@ public class PlatformerGame extends Applet implements KeyListener
 	//character variables
 	static int charHeight = 20; //width and height of the character
 	static int charWidth = 20;
-	int charY=aHeight-charHeight, charX=0; //the coordinates that describe the character's position
+	int charY=0, charX=0; //the coordinates that describe the character's position
 	Move character1;
-
-	//menu
-	int menuX = 100;
-	int menuY = 100;
-	int menuWidth = aWidth - 200;
-	int menuHeight = aHeight - 200;
-	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
-
 	
 	//timer
 	int minutes = 0; //minutes
@@ -63,7 +55,15 @@ public class PlatformerGame extends Applet implements KeyListener
   int downwardVelocity = 2;
 	
 	//menu variables
-	boolean isScrolling = false;
+	static boolean isPlaying = false;
+	int menuX = 100;
+	int menuY = 100;
+	int menuWidth = aWidth - 200;
+	int menuHeight = aHeight - 200;
+	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
+
+	//boolean isScrolling = false;
+
 
 	
 	//code below describes player movement side to side
@@ -88,6 +88,15 @@ public class PlatformerGame extends Applet implements KeyListener
 			if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
 				Move.w=true;
 			
+
+			if (p.getKeyChar() == ' ' && isPlaying == true)
+				isPlaying=false;
+			
+			else if (p.getKeyChar() == ' ' && isPlaying == false)
+				isPlaying=true;
+			
+			
+
 			if (p.getKeyChar() == ' ' && isScrolling == true)
 			{
 				isScrolling=false;
@@ -105,6 +114,7 @@ public class PlatformerGame extends Applet implements KeyListener
 				pauseTimeTwo = (int) System.currentTimeMillis();
 				start += pauseTimeTwo - pauseTimeOne;
 			}
+
 		}//ends keyPressed
 		
 		public void keyTyped(KeyEvent p)
@@ -164,7 +174,7 @@ public class PlatformerGame extends Applet implements KeyListener
       g.fillRect(Move.xPosit,Move.yPosit,charHeight,charWidth);
         
         //s menu
-        if(!isScrolling) openMenu.draw(g, this);
+        if(!isPlaying) openMenu.draw(g, this);
 
 
 
@@ -182,13 +192,12 @@ public class PlatformerGame extends Applet implements KeyListener
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
-
-			// TODO Auto-generated method stub
 			Move.tick();//calls the method tick from class move
 
-			if (isScrolling)
+			if (isPlaying)
 			{
 				platforms.scrollDown(downwardVelocity);
+				Move.scrollDown(downwardVelocity);
 			}
 			
 			//timer
