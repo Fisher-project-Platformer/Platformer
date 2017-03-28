@@ -10,7 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 /**
@@ -79,6 +82,16 @@ public class PlatformerGame extends Applet implements KeyListener
 	
 	boolean direction = true; //false is left, true is right
 	boolean stance = false; //false is still, true is running
+	
+	public static void resize(String inputImagePath,
+            String outputImagePath, double percent) throws IOException 
+	{
+        File inputFile = new File(inputImagePath);
+        BufferedImage background = ImageIO.read(inputFile);
+        int scaledWidth = (int) (inputImage.getWidth() * percent);
+        int scaledHeight = (int) (inputImage.getHeight() * percent);
+        resize(inputImagePath, outputImagePath, scaledWidth, scaledHeight)
+	}
 
 
 	
@@ -86,10 +99,16 @@ public class PlatformerGame extends Applet implements KeyListener
 		public void keyReleased(KeyEvent p)//actions to be performed on key release
 		{
 			if (p.getKeyCode() == KeyEvent.VK_A)//if up arrow is pressed
+			{
 				Move.a=false;
+				stance = false;
+			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
+			{
 				Move.d=false;
+				stance = false;
+			}
 			
 		}//ends keyReleased
 		
@@ -99,12 +118,14 @@ public class PlatformerGame extends Applet implements KeyListener
 			{
 				Move.a=true;
 				direction = false;
+				stance = true;
 			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
 			{
 				Move.d=true;
 				direction = true;
+				stance = true;
 			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
@@ -161,7 +182,6 @@ public class PlatformerGame extends Applet implements KeyListener
 		
 		addKeyListener(this);
 		setFocusable(true);
-		
 	}//End init
 	
 	/**
@@ -173,8 +193,7 @@ public class PlatformerGame extends Applet implements KeyListener
 		//background
 		tr = new MediaTracker(this);
 		background = getImage(getCodeBase(), 
-				"file:///C:/Users/Ar9914/Documents/GitHub/Platformer/src/"
-				+ "platformer/images/CS%20Background.png");
+				"Background.png");
 		tr.addImage(background, 0);
 		g.drawImage(background, 0, 0, this);
 		
@@ -204,7 +223,7 @@ public class PlatformerGame extends Applet implements KeyListener
 		{
 			tr.addImage(characterRunningRight, 0);
 			characterRunningRight = getImage(getCodeBase(), 
-	    		  "CS character smol (running) (right).png");
+	    		  "RunningRight.png");
 			g.drawImage(characterRunningRight, Move.xPosit, Move.yPosit, this);
 		}
         
@@ -212,7 +231,7 @@ public class PlatformerGame extends Applet implements KeyListener
 		{
 			tr.addImage(characterRunningLeft, 0);
 			characterRunningLeft = getImage(getCodeBase(), 
-	    		  "CS character smol (running) (left).png");
+	    		  "RunningLeft.png");
 			g.drawImage(characterRunningLeft, Move.xPosit, Move.yPosit, this);
 		}
 		
@@ -220,7 +239,7 @@ public class PlatformerGame extends Applet implements KeyListener
 		{
 			tr.addImage(characterStillRight, 0);
 			characterStillRight = getImage(getCodeBase(), 
-	    		  "/images/character.png");
+	    		  "StillRight.png");
 			g.drawImage(characterStillRight, Move.xPosit, Move.yPosit, this);
 		}
 		
@@ -228,7 +247,7 @@ public class PlatformerGame extends Applet implements KeyListener
 		{
 			tr.addImage(characterStillLeft, 0);
 			characterStillLeft = getImage(getCodeBase(), 
-	    		  "CS character smol facing right(still).png");
+	    		  "StillLeft.png");
 			g.drawImage(characterStillLeft, Move.xPosit, Move.yPosit, this);
 		}
         //s menu
