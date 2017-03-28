@@ -4,11 +4,16 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 /**
@@ -63,6 +68,30 @@ public class PlatformerGame extends Applet implements KeyListener
 	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
 
 	//boolean isScrolling = false;
+	
+	//background
+	Image background;
+	MediaTracker tr;
+	
+	//character
+	
+	Image characterStillLeft;
+	Image characterStillRight;
+	Image characterRunningLeft;
+	Image characterRunningRight;
+	
+	boolean direction = true; //false is left, true is right
+	boolean stance = false; //false is still, true is running
+	
+	public static void resize(String inputImagePath,
+            String outputImagePath, double percent) throws IOException 
+	{
+        File inputFile = new File(inputImagePath);
+        BufferedImage background = ImageIO.read(inputFile);
+        int scaledWidth = (int) (inputImage.getWidth() * percent);
+        int scaledHeight = (int) (inputImage.getHeight() * percent);
+        resize(inputImagePath, outputImagePath, scaledWidth, scaledHeight)
+	}
 
 
 	
@@ -70,20 +99,34 @@ public class PlatformerGame extends Applet implements KeyListener
 		public void keyReleased(KeyEvent p)//actions to be performed on key release
 		{
 			if (p.getKeyCode() == KeyEvent.VK_A)//if up arrow is pressed
+			{
 				Move.a=false;
+				stance = false;
+			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
+			{
 				Move.d=false;
+				stance = false;
+			}
 			
 		}//ends keyReleased
 		
 		public void keyPressed(KeyEvent p)//sets up events for when specific keys are typed
 		{
 			if (p.getKeyCode() == KeyEvent.VK_A)//if up arrow is pressed
+			{
 				Move.a=true;
+				direction = false;
+				stance = true;
+			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
+			{
 				Move.d=true;
+				direction = true;
+				stance = true;
+			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
 				Move.w=true;
@@ -95,13 +138,23 @@ public class PlatformerGame extends Applet implements KeyListener
 			if (p.getKeyChar() == ' ' && isPlaying == true)
 			{
 				isPlaying=false;
+<<<<<<< HEAD
+				
+=======
+>>>>>>> refs/remotes/origin/master
 				//timer stuff
 				pauseTimeOne = (int) System.currentTimeMillis();
 			}
 			
 			else if (p.getKeyChar() == ' ' && isPlaying == false)
+<<<<<<< HEAD
+			{	
+				isPlaying=true;
+				
+=======
 			{
 				isPlaying=true;
+>>>>>>> refs/remotes/origin/master
 				//timer stuff
 				pauseTimeTwo = (int) System.currentTimeMillis();
 				start += pauseTimeTwo - pauseTimeOne;
@@ -131,7 +184,6 @@ public class PlatformerGame extends Applet implements KeyListener
 		
 		addKeyListener(this);
 		setFocusable(true);
-		
 	}//End init
 	
 	/**
@@ -140,6 +192,13 @@ public class PlatformerGame extends Applet implements KeyListener
 	 */
 	public void paint(Graphics g)
 	{
+		//background
+		tr = new MediaTracker(this);
+		background = getImage(getCodeBase(), 
+				"Background.png");
+		tr.addImage(background, 0);
+		g.drawImage(background, 0, 0, this);
+		
 		//Draw platforms
 		platforms.draw(g);
 		
@@ -159,15 +218,48 @@ public class PlatformerGame extends Applet implements KeyListener
 		//if the seconds are less than 10, you do need that extra 0
 
 		//paints character
-		  g.setColor(Color.black);
-      g.fillRect(Move.xPosit,Move.yPosit,charHeight,charWidth);
+		if (direction == true && stance == true) //running facing right
+		{
+			tr.addImage(characterRunningRight, 0);
+			characterRunningRight = getImage(getCodeBase(), 
+	    		  "RunningRight.png");
+			g.drawImage(characterRunningRight, Move.xPosit, Move.yPosit, this);
+		}
         
+<<<<<<< HEAD
+		else if (direction == false && stance == true) //running facing left
+		{
+			tr.addImage(characterRunningLeft, 0);
+			characterRunningLeft = getImage(getCodeBase(), 
+	    		  "RunningLeft.png");
+			g.drawImage(characterRunningLeft, Move.xPosit, Move.yPosit, this);
+		}
+		
+		else if (direction == true && stance == false) //still facing left
+		{
+			tr.addImage(characterStillRight, 0);
+			characterStillRight = getImage(getCodeBase(), 
+	    		  "StillRight.png");
+			g.drawImage(characterStillRight, Move.xPosit, Move.yPosit, this);
+		}
+		
+		else if (direction == false && stance == false) //still facing right
+		{
+			tr.addImage(characterStillLeft, 0);
+			characterStillLeft = getImage(getCodeBase(), 
+	    		  "StillLeft.png");
+			g.drawImage(characterStillLeft, Move.xPosit, Move.yPosit, this);
+		}
+        //s menu
+        if(!isPlaying) openMenu.draw(g, this);
+=======
         //draws menu
         if(!isPlaying) openMenu.draw(g, this);
 
         g.setColor(Color.CYAN);
 		g.drawString(""+Move.yPosit+"," + Move.dy, 100, 100);
 
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	/**

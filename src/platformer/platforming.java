@@ -27,7 +27,6 @@ public class platforming extends Applet implements KeyListener
 	int charY=height-charHeight, charX=0; //the coordinates that describe the character's position
 	boolean menu = true;
 	boolean w=false, a=false, d=false;
-	boolean isPaused = true;
 	Move character1;
 	Image person;
 	
@@ -86,7 +85,7 @@ public class platforming extends Applet implements KeyListener
 		
 		public void actionPerformed(ActionEvent a)
 		{	
-		
+			
 			Move.tick();//calls the method tick from class move
 			repaint(); //repaints after conditions are tested for and resulting action is performed
 		} //ends actionPerformed

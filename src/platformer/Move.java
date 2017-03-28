@@ -13,11 +13,12 @@ public class Move extends Rectangle {
 	private static boolean down = true;
 	private static boolean left = true;
 	private static boolean right = true;
-    private static int speed = 8;
- 	private static int dx=0;
+    private static int speed = 5;
+    private static int jumpSpeed = 30;
+	private static int dx=0;
 	static int dy=0;
 	static int count=0;
-	static int grav;
+	private static int grav;
     public static int xPosit;
 	public static int yPosit;
 	public int x, y;
@@ -31,13 +32,12 @@ public class Move extends Rectangle {
 		
     public static void tick()
     {
-    	
-    	grav=(int)(.25*count*count);	
+    	grav=(int) (.25*count*count);	
     	//controls ability to move in the directions specified
     	if(xPosit<=0)left=false;
-    	if(xPosit>=1180)right=false;
+    	if(xPosit>=1200)right=false;
     	if(yPosit<=0)up=false;
-    	if(yPosit>=580)down=false;
+    	if(yPosit>=600)down=false;
     	
     	//sets the change of x and y as the speed in the respective direction
         if(a)dx-=speed;
@@ -59,6 +59,7 @@ public class Move extends Rectangle {
         yPosit+=dy;
         
         //resets the change of x and y to 0
+        dy=0;
         dx=0;
         
         
@@ -69,6 +70,8 @@ public class Move extends Rectangle {
         right = true;
     }
     
+<<<<<<< HEAD
+=======
     public static void scrollDown(int amount)
     {
     	if (!w && reset)
@@ -85,6 +88,7 @@ public class Move extends Rectangle {
     	}
     }
     
+>>>>>>> refs/remotes/origin/master
    
     
 }
