@@ -31,12 +31,12 @@ public class Menu
 	String[] text = new String[]{
 			"PLATFORMER",
 			" ",
-			"\u2190 \u2192    Move left or right",
-			"\u2191          Jump",
+			"  w         Jump",
+			"a   d       Move left or right",
 			"SPACE  Pause/Resume",
 			" ",
 			"Quit (Q)",
-			"Start (Enter)"
+			"Start (Space)"
 			};
 	
 	int lineSpacing = 25;

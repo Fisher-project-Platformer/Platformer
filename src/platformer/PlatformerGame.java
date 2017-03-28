@@ -131,33 +131,35 @@ public class PlatformerGame extends Applet implements KeyListener
 			if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
 				Move.w=true;
 			
-
-			if (p.getKeyChar() == ' ' && isPlaying == true)
-				isPlaying=false;
-			
-			else if (p.getKeyChar() == ' ' && isPlaying == false)
-				isPlaying=true;
-			
+			if (p.getKeyCode() == KeyEvent.VK_Q)//if the Q key is pressed
+				System.exit(0);
 			
 
 			if (p.getKeyChar() == ' ' && isPlaying == true)
 			{
 				isPlaying=false;
+<<<<<<< HEAD
 				
+=======
+>>>>>>> refs/remotes/origin/master
 				//timer stuff
 				pauseTimeOne = (int) System.currentTimeMillis();
-				
 			}
 			
 			else if (p.getKeyChar() == ' ' && isPlaying == false)
+<<<<<<< HEAD
 			{	
 				isPlaying=true;
 				
+=======
+			{
+				isPlaying=true;
+>>>>>>> refs/remotes/origin/master
 				//timer stuff
 				pauseTimeTwo = (int) System.currentTimeMillis();
 				start += pauseTimeTwo - pauseTimeOne;
 			}
-
+					
 		}//ends keyPressed
 		
 		public void keyTyped(KeyEvent p)
@@ -200,9 +202,6 @@ public class PlatformerGame extends Applet implements KeyListener
 		//Draw platforms
 		platforms.draw(g);
 		
-		//Draw menu	
-		openMenu.draw(g, this);
-		
 		//Timer
 		g.setColor(Color.gray); //create the box
 		g.fillRect(boxPosx, boxPosy, boxSizex, boxSizey); //fill the box
@@ -227,6 +226,7 @@ public class PlatformerGame extends Applet implements KeyListener
 			g.drawImage(characterRunningRight, Move.xPosit, Move.yPosit, this);
 		}
         
+<<<<<<< HEAD
 		else if (direction == false && stance == true) //running facing left
 		{
 			tr.addImage(characterRunningLeft, 0);
@@ -252,6 +252,14 @@ public class PlatformerGame extends Applet implements KeyListener
 		}
         //s menu
         if(!isPlaying) openMenu.draw(g, this);
+=======
+        //draws menu
+        if(!isPlaying) openMenu.draw(g, this);
+
+        g.setColor(Color.CYAN);
+		g.drawString(""+Move.yPosit+"," + Move.dy, 100, 100);
+
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	/**
@@ -266,7 +274,6 @@ public class PlatformerGame extends Applet implements KeyListener
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
-			Move.tick();//calls the method tick from class move
 
 			if (isPlaying)
 			{
@@ -274,6 +281,7 @@ public class PlatformerGame extends Applet implements KeyListener
 				Move.scrollDown(downwardVelocity);
 			}
 			
+			Move.tick();//calls the method tick from class moved
 			//timer
 			
 			change = (int) System.currentTimeMillis();
