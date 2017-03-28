@@ -11,6 +11,7 @@ public class jumping {
             Move.dy=0;
             Move.reset = true;
             Move.w = false;
+            Move.fall=true;
         }
         return w;
     }

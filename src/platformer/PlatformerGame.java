@@ -20,7 +20,7 @@ import javax.swing.Timer;
 public class PlatformerGame extends Applet implements KeyListener
 {
 	//Locations and sizes
-	int aWidth = 1200, aHeight = 600;
+	static int aWidth = 1200, aHeight = 600;
 	final int PLATFORM_SPACING = 100; 
 	final int NUMBER_OF_PLATFORMS = 10;
 	final int FIRST_PLATFORM_LOCATION = 550;
@@ -48,6 +48,7 @@ public class PlatformerGame extends Applet implements KeyListener
 	//pause variables
 	int pauseTimeOne = (int) System.currentTimeMillis();
 	int pauseTimeTwo = 0;
+	int loseTime = 0;
 	
 	//Other variables
 	public Timer timer;
@@ -56,41 +57,50 @@ public class PlatformerGame extends Applet implements KeyListener
 	
 	//menu variables
 	static boolean isPlaying = false;
+	static boolean lose = false;
 	int menuX = 100;
 	int menuY = 100;
 	int menuWidth = aWidth - 200;
 	int menuHeight = aHeight - 200;
 	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
 
-	//boolean isScrolling = false;
 
 
 	
 	//code below describes player movement side to side
 		public void keyReleased(KeyEvent p)//actions to be performed on key release
 		{
-			if (p.getKeyCode() == KeyEvent.VK_A)//if up arrow is pressed
-				Move.a=false;
+				if (p.getKeyCode() == KeyEvent.VK_A)//if up arrow is pressed
+					Move.a=false;
 			
-			if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
-				Move.d=false;
+				if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
+					Move.d=false;
+				
+				if (p.getKeyChar() == ' ')//if space movement is set to false
+				{
+					Move.d=false;
+					Move.a=false;
+				}
 			
 		}//ends keyReleased
 		
 		public void keyPressed(KeyEvent p)//sets up events for when specific keys are typed
 		{
-			if (p.getKeyCode() == KeyEvent.VK_A)//if up arrow is pressed
-				Move.a=true;
+			if (isPlaying ==true)
+			{
+				if (p.getKeyCode() == KeyEvent.VK_A)//if up arrow is pressed
+					Move.a=true;
 			
-			if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
-				Move.d=true;
+				if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
+					Move.d=true;
 			
-			if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
-				Move.w=true;
+				if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
+					Move.w=true;
+			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_Q)//if the Q key is pressed
 				System.exit(0);
-			
+		
 
 			if (p.getKeyChar() == ' ' && isPlaying == true)
 			{
@@ -98,7 +108,7 @@ public class PlatformerGame extends Applet implements KeyListener
 				//timer stuff
 				pauseTimeOne = (int) System.currentTimeMillis();
 			}
-			
+		
 			else if (p.getKeyChar() == ' ' && isPlaying == false)
 			{
 				isPlaying=true;
@@ -106,7 +116,7 @@ public class PlatformerGame extends Applet implements KeyListener
 				pauseTimeTwo = (int) System.currentTimeMillis();
 				start += pauseTimeTwo - pauseTimeOne;
 			}
-					
+				
 		}//ends keyPressed
 		
 		public void keyTyped(KeyEvent p)
@@ -128,7 +138,7 @@ public class PlatformerGame extends Applet implements KeyListener
 		timer.start();
 		
 		character1 = new Move(charX,charY);		
-		
+		 
 		addKeyListener(this);
 		setFocusable(true);
 		
@@ -142,7 +152,8 @@ public class PlatformerGame extends Applet implements KeyListener
 	{
 		//Draw platforms
 		platforms.draw(g);
-		
+		g.setColor(Color.BLUE);
+		g.drawString(pauseTimeOne + ", " + pauseTimeTwo + ", " + change + ", " + start, 200, 100);
 		//Timer
 		g.setColor(Color.gray); //create the box
 		g.fillRect(boxPosx, boxPosy, boxSizex, boxSizey); //fill the box
@@ -167,6 +178,13 @@ public class PlatformerGame extends Applet implements KeyListener
 
         g.setColor(Color.CYAN);
 		g.drawString(""+Move.yPosit+"," + Move.dy, 100, 100);
+		
+		if (lose)
+		{
+			//draw lose menu here
+			loseTime = (int) System.currentTimeMillis();
+			change = loseTime;
+		}
 
 	}
 	
@@ -188,12 +206,17 @@ public class PlatformerGame extends Applet implements KeyListener
 				platforms.scrollDown(downwardVelocity);
 				Move.scrollDown(downwardVelocity);
 			}
+			if(!isPlaying)
+    		{
+    			Move.dx = 0;
+    			Move.dy = 0;//stops character movement while pause or game is lost
+    		}
 			
 			Move.tick();//calls the method tick from class moved
 			//timer
 			
 			change = (int) System.currentTimeMillis();
-			if (isPlaying == true) //functioning normally
+			if (isPlaying) //functioning normally
 			{
 				minutes = Timer2.getMinutes(change, start);
 				seconds = Timer2.getSeconds(change, start);
@@ -204,6 +227,8 @@ public class PlatformerGame extends Applet implements KeyListener
 				minutes = Timer2.getMinutes(pauseTimeOne, start);
 				seconds = Timer2.getSeconds(pauseTimeOne, start);
 			}
+			
+			if(lose) isPlaying=false;
 			//update the time
 			
 			repaint();
