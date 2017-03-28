@@ -4,6 +4,8 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -63,6 +65,20 @@ public class PlatformerGame extends Applet implements KeyListener
 	Menu openMenu = new Menu(menuX, menuY, menuWidth, menuHeight);
 
 	//boolean isScrolling = false;
+	
+	 //background
+		Image background;
+		MediaTracker tr;
+		
+		//character
+		
+		Image characterStillLeft;
+		Image characterStillRight;
+		Image characterRunningLeft;
+		Image characterRunningRight;
+		
+		boolean direction = true; //false is left, true is right
+		boolean stance = false; //false is still, true is running
 
 
 	
@@ -70,20 +86,34 @@ public class PlatformerGame extends Applet implements KeyListener
 		public void keyReleased(KeyEvent p)//actions to be performed on key release
 		{
 			if (p.getKeyCode() == KeyEvent.VK_A)//if up arrow is pressed
+			{
 				Move.a=false;
+				stance = false;
+			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
+			{
 				Move.d=false;
+				stance = false;
+			}
 			
 		}//ends keyReleased
 		
 		public void keyPressed(KeyEvent p)//sets up events for when specific keys are typed
 		{
 			if (p.getKeyCode() == KeyEvent.VK_A)//if up arrow is pressed
+			{
 				Move.a=true;
+				direction = false;
+				stance = true;
+			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_D)//if down arrow is pressed
+			{
 				Move.d=true;
+				direction = true;
+				stance = true;
+			}
 			
 			if (p.getKeyCode() == KeyEvent.VK_W)//if the W key is pressed
 				Move.w=true;
@@ -167,6 +197,35 @@ public class PlatformerGame extends Applet implements KeyListener
 
         g.setColor(Color.CYAN);
 		g.drawString(""+Move.yPosit+"," + Move.dy, 100, 100);
+		
+		if (direction == true && stance == true) //running facing right
+		{
+			tr.addImage(characterRunningRight, 0);
+			characterRunningRight = getImage(getCodeBase(),"RunningRight.png");
+			g.drawImage(characterRunningRight, Move.xPosit, Move.yPosit, this);
+		}
+        
+		else if (direction == false && stance == true) //running facing left
+		{
+			tr.addImage(characterRunningLeft, 0);
+			characterRunningLeft = getImage(getCodeBase(),"RunningLeft.png");
+			g.drawImage(characterRunningLeft, Move.xPosit, Move.yPosit, this);
+		}
+		
+		else if (direction == true && stance == false) //still facing left
+		{
+			tr.addImage(characterStillRight, 0);
+			characterStillRight = getImage(getCodeBase(),"StillRight.png");
+			g.drawImage(characterStillRight, Move.xPosit, Move.yPosit, this);
+		}
+		
+		else if (direction == false && stance == false) //still facing right
+		{
+			tr.addImage(characterStillLeft, 0);
+			characterStillLeft = getImage(getCodeBase(), 
+	    		  "StillLeft.png");
+			g.drawImage(characterStillLeft, Move.xPosit, Move.yPosit, this);
+		}
 
 	}
 	
